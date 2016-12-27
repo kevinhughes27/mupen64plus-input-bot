@@ -180,12 +180,13 @@ ifeq ($(PLUGINDIR),)
   PLUGINDIR := $(LIBDIR)/mupen64plus
 endif
 
+SRCDIR = src
 OBJDIR = _obj$(POSTFIX)
 
 # list of source files to compile
 SOURCE = \
-	plugin.c \
-	controller.c
+	$(SRCDIR)/plugin.c \
+	$(SRCDIR)/controller.c
 
 # generate a list of object files build, make a temporary directory for them
 OBJECTS := $(patsubst %.c, $(OBJDIR)/%.o, $(filter %.c, $(SOURCE)))
