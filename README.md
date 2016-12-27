@@ -35,9 +35,3 @@ assuming this repo is located in a directory called `src` in your home directory
 Testing
 -------
 An example server is included in `/test/server.py`. This file is a minimal example that allows you to hard code the joystick input. This example is intended to be extracted into a program that determines the appropriate input somehow.
-
-
-ToDo
-----
-* correct the joytick input (follow the sdl plugin code)
-* add rescue from failed to connect (should warn.)

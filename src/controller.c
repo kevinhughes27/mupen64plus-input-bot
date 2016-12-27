@@ -37,14 +37,30 @@ int socket_connect(char *host, int portno) {
     memcpy(&serv_addr.sin_addr.s_addr, server->h_addr, server->h_length);
 
     /* connect the socket */
-    if (connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
-        DebugMessage(M64MSG_ERROR, "ERROR connecting");
+    if (connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
+        DebugMessage(M64MSG_INFO, "ERROR connecting, please start bot server.");
+        return -1;
+    }
 
     return sockfd;
 }
 
+void clear_controller() {
+  controller[0].buttons.X_AXIS = 0;
+  controller[0].buttons.Y_AXIS = 0;
+
+  controller[0].buttons.A_BUTTON = 0;
+  controller[0].buttons.B_BUTTON = 0;
+  controller[0].buttons.R_TRIG = 0;
+}
+
 void read_controller() {
   int sockfd = socket_connect(HOST, PORT);
+
+  if (sockfd == -1) {
+    clear_controller();
+    return;
+  }
 
   int bytes, sent, received, total;
   char message[1024], response[4096]; // allocate more space than required.
