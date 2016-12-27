@@ -184,7 +184,8 @@ OBJDIR = _obj$(POSTFIX)
 
 # list of source files to compile
 SOURCE = \
-	plugin.c
+	plugin.c \
+	controller.c
 
 # generate a list of object files build, make a temporary directory for them
 OBJECTS := $(patsubst %.c, $(OBJDIR)/%.o, $(filter %.c, $(SOURCE)))

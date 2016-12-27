@@ -3,8 +3,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <unistd.h>
+#include <sys/socket.h>
+
 #include "plugin.h"
 #include "version.h"
+#include "controller.h"
 
 /* global data definitions */
 SController controller[1];   // 1 controller
@@ -171,12 +175,7 @@ EXPORT void CALL RomClosed(void)
 *******************************************************************/
 EXPORT void CALL GetKeys( int Control, BUTTONS *Keys )
 {
-    if (rand() % 2 == 0) {
-      controller[0].buttons.A_BUTTON = 1;
-    } else {
-      controller[0].buttons.A_BUTTON = 0;
-    }
-
+    read_controller();
     *Keys = controller[0].buttons;
 }
 
