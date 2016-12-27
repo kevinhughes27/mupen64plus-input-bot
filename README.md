@@ -19,7 +19,7 @@ eg.
 src \
   mupen64plus-core \
     ...
-  Mupen64plus-input-sdl \
+  mupen64plus-input-bot \
     ...
 ```
 
@@ -29,9 +29,23 @@ Usage
 mupen64plus --input ~/src/mupen64plus-input-bot/mupen64plus-input-bot.so MarioKart64.z64
 ```
 
-assuming this repo is located in a directory called `src` in your home directory
+assuming this repo is located in a directory called `src` under your home directory
 
 
 Testing
 -------
 An example server is included in `/test/server.py`. This file is a minimal example that allows you to hard code the joystick input. This example is intended to be extracted into a program that determines the appropriate input somehow.
+
+
+Future Work / Ideas
+-------------------
+* I only implemented what I required for buttons. This could be expanded and built into a fully fledged solution
+* Use a more structured protocol between the plugin and server (aka JSON)
+* `controller.c` could be refactored into smaller functions
+* I'm sure my c code can be optimized and improved
+* This plugin might be useful for implementing network play with mupen64plus
+
+
+Contributing
+------------
+Open a PR! I'm friendly I promise :)
