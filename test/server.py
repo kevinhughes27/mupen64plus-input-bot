@@ -6,6 +6,9 @@ import random
 PORT_NUMBER = 8082
 
 class myHandler(BaseHTTPRequestHandler):
+	def log_message(self, format, *args):
+		pass
+
 	def do_GET(self):
 		self.send_response(200)
 		self.send_header("Content-type", "text/plain")
@@ -15,6 +18,7 @@ class myHandler(BaseHTTPRequestHandler):
 		if(random.random() % 2 > 0.5):
 			sample_output[2] = 0
 
+		print sample_output
 		self.wfile.write(sample_output)
 		return
 
