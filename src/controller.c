@@ -16,7 +16,6 @@
 
 #define HOST "localhost"
 #define PORT 8082
-#define BUFFER_SIZE 1024
 
 int socket_connect(char *host, int portno) {
     struct hostent *server;
