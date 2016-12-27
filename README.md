@@ -12,6 +12,16 @@ make all
 
 The project uses essentially a copy and paste of the Makefile from the [regular input plugin for mupen64plus](https://github.com/mupen64plus/mupen64plus-input-sdl) With the dynamic config lib and SDL dependencies removed.
 
+Note that all builds expect the mupen64plus-core source code to be available in the same directory.
+
+eg.
+```
+src \
+  mupen64plus-core \
+    ...
+  Mupen64plus-input-sdl \
+    ...
+```
 
 Usage
 -----
