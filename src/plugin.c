@@ -11,7 +11,7 @@
 #include "controller.h"
 
 /* global data definitions */
-SController controller[1];   // 1 controller
+SController controller[1];  // 1 controller
 
 /* static data definitions */
 static void (*l_DebugCallback)(void *, int, const char *) = NULL;
@@ -36,8 +36,7 @@ void DebugMessage(int level, const char *message, ...)
 }
 
 /* Mupen64Plus plugin functions */
-EXPORT m64p_error CALL PluginStartup(m64p_dynlib_handle CoreLibHandle, void *Context,
-                                   void (*DebugCallback)(void *, int, const char *))
+EXPORT m64p_error CALL PluginStartup(m64p_dynlib_handle CoreLibHandle, void *Context, void (*DebugCallback)(void *, int, const char *))
 {
     if (l_PluginInit)
         return M64ERR_ALREADY_INIT;
@@ -75,9 +74,7 @@ EXPORT m64p_error CALL PluginGetVersion(m64p_plugin_type *PluginType, int *Plugi
         *PluginNamePtr = PLUGIN_NAME;
 
     if (Capabilities != NULL)
-    {
         *Capabilities = 0;
-    }
 
     return M64ERR_SUCCESS;
 }
@@ -94,7 +91,7 @@ EXPORT m64p_error CALL PluginGetVersion(m64p_plugin_type *PluginType, int *Plugi
 EXPORT void CALL InitiateControllers(CONTROL_INFO ControlInfo)
 {
     // reset controllers
-    memset( controller, 0, sizeof( SController ) );
+    memset(controller, 0, sizeof( SController ));
 
     // set our CONTROL struct pointers to the array that was passed in to this function from the core
     // this small struct tells the core whether each controller is plugged in, and what type of pak is connected
@@ -141,7 +138,6 @@ EXPORT void CALL ControllerCommand(int Control, unsigned char *Command)
 EXPORT void CALL ReadController(int Control, unsigned char *Command)
 {
 }
-
 
 /******************************************************************
   Function: RomOpen

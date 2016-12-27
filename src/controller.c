@@ -31,13 +31,13 @@ int socket_connect(char *host, int portno) {
     if (server == NULL) DebugMessage(M64MSG_ERROR, "ERROR, no such host");
 
     /* fill in the structure */
-    memset(&serv_addr,0,sizeof(serv_addr));
+    memset(&serv_addr, 0, sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(portno);
-    memcpy(&serv_addr.sin_addr.s_addr,server->h_addr,server->h_length);
+    memcpy(&serv_addr.sin_addr.s_addr, server->h_addr, server->h_length);
 
     /* connect the socket */
-    if (connect(sockfd,(struct sockaddr *)&serv_addr,sizeof(serv_addr)) < 0)
+    if (connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
         DebugMessage(M64MSG_ERROR, "ERROR connecting");
 
     return sockfd;
@@ -48,13 +48,13 @@ void read_controller() {
 
   int bytes, sent, received, total;
   char message[1024], response[4096]; // allocate more space than required.
-  sprintf(message,"GET / HTTP/1.0\r\n\r\n");
+  sprintf(message, "GET / HTTP/1.0\r\n\r\n");
 
   /* send the request */
   total = strlen(message);
   sent = 0;
   do {
-      bytes = write(sockfd,message+sent,total-sent);
+      bytes = write(sockfd, message+sent, total-sent);
       if (bytes < 0)
           DebugMessage(M64MSG_ERROR, "ERROR writing message to socket");
       if (bytes == 0)
@@ -63,11 +63,11 @@ void read_controller() {
   } while (sent < total);
 
   /* receive the response */
-  memset(response,0,sizeof(response));
+  memset(response, 0, sizeof(response));
   total = sizeof(response)-1;
   received = 0;
   do {
-      bytes = read(sockfd,response+received,total-received);
+      bytes = read(sockfd, response+received, total-received);
       if (bytes < 0)
           DebugMessage(M64MSG_ERROR, "ERROR reading response from socket");
       if (bytes == 0)
@@ -84,8 +84,8 @@ void read_controller() {
   #endif
 
   /* parse the http response */
-  char * body = strtok(response,"\n");
-  for(int i=0; i < 5; i++)
+  char * body = strtok(response, "\n");
+  for(int i=0; i<5; i++)
     body = strtok(NULL,"\n");
 
   /* parse the body of the response */
