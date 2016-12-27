@@ -11,7 +11,7 @@ class myHandler(BaseHTTPRequestHandler):
 		self.send_header("Content-type", "text/plain")
 		self.end_headers()
 
-		sample_output = [-32767, 32767, 1, 0, 0]
+		sample_output = [-80, 80, 1, 0, 0]
 		if(random.random() % 2 > 0.5):
 			sample_output[2] = 0
 
