@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <string.h>
 
 #include <netinet/tcp.h>
 #include <sys/socket.h>
@@ -78,7 +79,46 @@ void read_controller() {
   if (received == total)
       DebugMessage(M64MSG_ERROR, "ERROR storing complete response from socket");
 
-  DebugMessage(M64MSG_INFO, response);
+  /* print the response */
+  #ifdef _DEBUG
+    DebugMessage(M64MSG_INFO, response);
+  #endif
+
+  /* parse the http response */
+  char * body = strtok(response,"\n");
+  for(int i=0; i < 5; i++)
+    body = strtok(NULL,"\n");
+
+  /* parse the body of the response */
+  char * str;
+  int value;
+
+  body++; // skip first character. it is `[`
+
+  /* x-axis */
+  str = strtok(body, ",");
+  value = atoi(str);
+  controller[0].buttons.X_AXIS = value;
+
+  /* y-axis */
+  str = strtok(NULL, ",");
+  value = atoi(str);
+  controller[0].buttons.Y_AXIS = value;
+
+  /* a button */
+  str = strtok(NULL, ",");
+  value = atoi(str);
+  controller[0].buttons.A_BUTTON = value;
+
+  /* b button */
+  str = strtok(NULL, ",");
+  value = atoi(str);
+  controller[0].buttons.B_BUTTON = value;
+
+  /* rb button */
+  str = strtok(NULL, ",]"); // include the close `]` as a token to just get the value
+  value = atoi(str);
+  controller[0].buttons.R_TRIG = value;
 
   close(sockfd);
 }

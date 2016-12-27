@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+import random
 
 PORT_NUMBER = 8082
 
@@ -9,7 +10,12 @@ class myHandler(BaseHTTPRequestHandler):
 		self.send_response(200)
 		self.send_header("Content-type", "text/plain")
 		self.end_headers()
-		self.wfile.write("Hello World !")
+
+		sample_output = [-32767, 32767, 1, 0, 0]
+		if(random.random() % 2 > 0.5):
+			sample_output[2] = 0
+
+		self.wfile.write(sample_output)
 		return
 
 try:

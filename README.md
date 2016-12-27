@@ -29,7 +29,5 @@ An example server is included in `/test/server.py`. This file is a minimal examp
 
 ToDo
 ----
-Currently the server just returns a String and the driver prints it.
-1. make server return an appropriate array
-2. consume this array and use it to set the controller buttons (note that this controller is available globally in this plugin)
-3. profit
+* correct the joytick input (follow the sdl plugin code)
+* add rescue from failed to connect (should warn.)
