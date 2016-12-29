@@ -1,7 +1,7 @@
 mupen64plus-input-bot
 =====================
 
-An input driver for [mupen64plus](https://github.com/mupen64plus/mupen64plus-core) that consumes from a python web server. Intended for use with my TensorKart project that trains an AI using TensorFlow to play the classic N64 title MarioKart 64.
+An input driver for [mupen64plus](https://github.com/mupen64plus/mupen64plus-core) that consumes from a python web server. Intended for use with my [TensorKart](https://github.com/kevinhughes27/TensorKart) project that trains an AI using TensorFlow to play the classic N64 title MarioKart 64.
 
 
 Building
