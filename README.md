@@ -23,13 +23,23 @@ src \
     ...
 ```
 
+
+Installing
+----------
+
+After building run `sudo make install` to copy the driver to the default location.
+
+```
+/usr/local/lib/mupen64plus/mupen64plus-input-bot.so
+```
+
+Installing the driver to a standard system location allows downstream applications to configure mupen64plus automatically (for example the [mupen64plus OpenAI gym](https://github.com/bzier/gym-mupen64plus))
+
 Usage
 -----
 ```shell
-mupen64plus --input ~/src/mupen64plus-input-bot/mupen64plus-input-bot.so MarioKart64.z64
+mupen64plus --input /usr/local/lib/mupen64plus/mupen64plus-input-bot.so MarioKart64.z64
 ```
-
-assuming this repo is located in a directory called `src` under your home directory
 
 
 Testing
