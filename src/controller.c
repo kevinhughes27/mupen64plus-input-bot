@@ -49,12 +49,22 @@ int socket_connect(char *host, int portno) {
 }
 
 void clear_controller() {
+    controller[0].buttons.R_DPAD = 0;
+    controller[0].buttons.L_DPAD = 0;
+    controller[0].buttons.D_DPAD = 0;
+    controller[0].buttons.U_DPAD = 0;
+    controller[0].buttons.START_BUTTON = 0;
+    controller[0].buttons.Z_TRIG = 0;
+    controller[0].buttons.B_BUTTON = 0;
+    controller[0].buttons.A_BUTTON = 0;
+    controller[0].buttons.R_CBUTTON = 0;
+    controller[0].buttons.L_CBUTTON = 0;
+    controller[0].buttons.D_CBUTTON = 0;
+    controller[0].buttons.U_CBUTTON = 0;
+    controller[0].buttons.R_TRIG = 0;
+    controller[0].buttons.L_TRIG = 0;
     controller[0].buttons.X_AXIS = 0;
     controller[0].buttons.Y_AXIS = 0;
-
-    controller[0].buttons.A_BUTTON = 0;
-    controller[0].buttons.B_BUTTON = 0;
-    controller[0].buttons.R_TRIG = 0;
 }
 
 void read_controller() {
