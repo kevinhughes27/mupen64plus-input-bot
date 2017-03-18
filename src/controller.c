@@ -118,7 +118,7 @@ void read_controller() {
         body = strtok(NULL, "\n");
 
     /* parse the body of the response */
-	json_object *jsonObj = json_tokener_parse(body);
+    json_object *jsonObj = json_tokener_parse(body);
     
 /* print the object */
 #ifdef _DEBUG
