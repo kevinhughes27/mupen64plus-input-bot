@@ -136,6 +136,10 @@ else
   endif
 endif
 
+# include libjson-c
+CFLAGS += -I/usr/include/json-c
+LDLIBS+= -ljson-c
+
 # reduced compile output when running make without V=1
 ifneq ($(findstring $(MAKEFLAGS),s),s)
 ifndef V

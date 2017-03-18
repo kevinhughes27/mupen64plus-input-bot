@@ -1,7 +1,7 @@
 mupen64plus-input-bot
 =====================
 
-An input driver for [mupen64plus](https://github.com/mupen64plus/mupen64plus-core) that consumes from a python web server. Intended for use with my [TensorKart](https://github.com/kevinhughes27/TensorKart) project that trains an AI using TensorFlow to play the classic N64 title MarioKart 64.
+An input driver for [mupen64plus](https://github.com/mupen64plus/mupen64plus-core) that consumes a JSON response from a web server. Intended for use with my [TensorKart](https://github.com/kevinhughes27/TensorKart) project that trains an AI using TensorFlow to play the classic N64 title MarioKart 64.
 
 
 Building
@@ -10,7 +10,11 @@ Building
 make all
 ```
 
-The project uses essentially a copy and paste of the Makefile from the [regular input plugin for mupen64plus](https://github.com/mupen64plus/mupen64plus-input-sdl) With the dynamic config lib and SDL dependencies removed.
+The project uses essentially a copy and paste of the Makefile from the [regular input plugin for mupen64plus](https://github.com/mupen64plus/mupen64plus-input-sdl) with the dynamic config lib and SDL dependencies removed. It includes flags to link `libjson-c`, which it assumes has been installed into `/usr/lib` and `/usr/include`. You can get this library on Ubuntu by installing the following packages (or if you prefer, you can build the latest from source [here](https://github.com/json-c/json-c)):
+```
+libjson-c2
+libjson-c-dev
+```
 
 Note that all builds expect the mupen64plus-core source code to be available in the same directory.
 
@@ -32,6 +36,33 @@ mupen64plus --input ~/src/mupen64plus-input-bot/mupen64plus-input-bot.so MarioKa
 assuming this repo is located in a directory called `src` under your home directory
 
 
+Protocol
+--------
+The server attempts to deserialize the web response as a JSON object. It expects the JSON object to contain properties that represent each of the controller button states (as integers). If any buttons are not included in the response, their values will default to 0.
+
+Example JSON response:
+```json
+{
+  "START_BUTTON": 0,
+  "U_CBUTTON": 0,
+  "L_DPAD": 0,
+  "A_BUTTON": 1,
+  "B_BUTTON": 0,
+  "X_AXIS": -80,
+  "L_CBUTTON": 0,
+  "R_CBUTTON": 0,
+  "R_TRIG": 0,
+  "R_DPAD": 0,
+  "D_CBUTTON": 0,
+  "Z_TRIG": 0,
+  "Y_AXIS": 80,
+  "L_TRIG": 0,
+  "U_DPAD": 0,
+  "D_DPAD": 0
+}
+```
+
+
 Testing
 -------
 An example server is included in `/test/server.py`. This file is a minimal example that allows you to hard code the joystick input. This example is intended to be extracted into a program that determines the appropriate input somehow.
@@ -39,8 +70,6 @@ An example server is included in `/test/server.py`. This file is a minimal examp
 
 Future Work / Ideas
 -------------------
-* I only implemented what I required for buttons. This could be expanded and built into a fully fledged solution
-* Use a more structured protocol between the plugin and server (aka JSON)
 * `controller.c` could be refactored into smaller functions
 * I'm sure my c code can be optimized and improved
 * This plugin might be useful for implementing network play with mupen64plus
