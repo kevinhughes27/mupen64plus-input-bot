@@ -4,6 +4,8 @@
 #include "m64p_plugin.h"
 #include "m64p_types.h"
 
+#define NUM_CONTROLLERS 4
+
 typedef struct
 {
     CONTROL *control; // pointer to CONTROL struct in Core library
@@ -11,7 +13,7 @@ typedef struct
 } SController;
 
 /* global data definitions */
-extern SController controller[1]; // 1 controller
+extern SController controller[NUM_CONTROLLERS];
 
 /* global function definitions */
 extern void DebugMessage(int level, const char *message, ...);
