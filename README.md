@@ -10,7 +10,7 @@ Building
 make all
 ```
 
-The project uses essentially a copy and paste of the Makefile from the [regular input plugin for mupen64plus](https://github.com/mupen64plus/mupen64plus-input-sdl) with the dynamic config lib and SDL dependencies removed. It includes flags to link `libjson-c`, which it assumes has been installed into `/usr/lib` and `/usr/include`. You can get this library on Ubuntu by installing the following packages (or if you prefer, you can build the latest from source [here](https://github.com/json-c/json-c)):
+The project uses essentially a copy and paste of the Makefile from the [regular input plugin for mupen64plus](https://github.com/mupen64plus/mupen64plus-input-sdl) with the SDL dependencies removed. It includes flags to link `libjson-c`, which it assumes has been installed into `/usr/lib` and `/usr/include`. You can get this library on Ubuntu by installing the following packages (or if you prefer, you can build the latest from source [here](https://github.com/json-c/json-c)):
 ```
 libjson-c2
 libjson-c-dev
@@ -27,11 +27,13 @@ src \
     ...
 ```
 
+There is a Makefile argument (`APIDIR`) to specify this directory path if you prefer.
+
 
 Installing
 ----------
 
-After building run `sudo make install` to copy the driver to the default location.
+After building, run `sudo make install` to copy the driver to the default location.
 
 ```
 /usr/local/lib/mupen64plus/mupen64plus-input-bot.so
@@ -41,13 +43,86 @@ Installing the driver to a standard system location allows downstream applicatio
 
 Usage
 -----
-```shell
+```sh
 mupen64plus --input /usr/local/lib/mupen64plus/mupen64plus-input-bot.so MarioKart64.z64
+```
+
+By default, the driver specifies the HTTP server as `localhost:8082` with a single controller connected. This can be overridden per controller via configuration. 
+
+Configuration
+-------------
+Parameters can be specified via the Mupen64plus config file, or via command line switches (`--set`). There are currently three values which can be configured:
+
+| Parameter | Description                                                             |
+| --------- | ----------------------------------------------------------------------- |
+| `plugged` | deterimines whether or not the controller is connected (values: 0 or 1) |
+| `host`    | the hostname of the controller server (max length: 256 chars)           |
+| `port`    | the port for the controller server (type: int)                          |
+
+Mupen64plus config file:
+```ini
+# Default unix path:
+# ~/.config/mupen64plus/mupen64plus.cfg
+
+# [...]
+
+[Input-Bot-Control0]
+
+plugged = "1"
+host = "contr_srv_1.example.com"
+port = "8082"
+
+[Input-Bot-Control1]
+
+plugged = "1"
+host = "contr_srv_1.example.com"
+port = "8083"
+
+[Input-Bot-Control2]
+
+plugged = "1"
+host = "contr_srv_2.example.com"
+port = "8084"
+
+[Input-Bot-Control3]
+
+plugged = "0"
+host = "contr_srv_2.example.com"
+port = "8085"
+
+# [...]
+```
+
+Command line:
+```sh
+mupen64plus                                                    \
+  --input /usr/local/lib/mupen64plus/mupen64plus-input-bot.so  \
+                                                               \
+  --set Input-Bot-Control0[plugged]=1                          \
+  --set Input-Bot-Control0[host]=contr_srv_1.example.com       \
+  --set Input-Bot-Control0[port]=8082                          \
+                                                               \
+  --set Input-Bot-Control1[plugged]=1                          \
+  --set Input-Bot-Control1[host]=contr_srv_1.example.com       \
+  --set Input-Bot-Control1[port]=8083                          \
+                                                               \
+  MarioKart64.z64
 ```
 
 
 Protocol
 --------
+
+This driver supports all 4 controllers. When it issues requests for the controller data, it makes a GET request to the path of the controller index (0-3).
+
+Example requests:
+```
+GET /0 HTTP/1.1
+GET /1 HTTP/1.1
+GET /2 HTTP/1.1
+GET /3 HTTP/1.1
+```
+
 The server attempts to deserialize the web response as a JSON object. It expects the JSON object to contain properties that represent each of the controller button states (as integers). If any buttons are not included in the response, their values will default to 0.
 
 Example JSON response:

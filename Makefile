@@ -189,6 +189,7 @@ OBJDIR = _obj$(POSTFIX)
 
 # list of source files to compile
 SOURCE = \
+  $(SRCDIR)/osal_dynamiclib.c \
 	$(SRCDIR)/plugin.c \
 	$(SRCDIR)/controller.c
 
