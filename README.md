@@ -122,7 +122,8 @@ Protocol
 --------
 
 This driver supports all 4 controllers. When it issues requests for the controller data, it makes a GET request to the
-path of the controller index (0-3).
+path of the controller index (0-3). This allows server implementations to handle requests for each of the 4 controllers.
+Alternatively, separate web servers could be used for each controller (see the Configuration section above for details).
 
 Example requests:
 ```
@@ -132,7 +133,7 @@ GET /2 HTTP/1.1
 GET /3 HTTP/1.1
 ```
 
-The server attempts to deserialize the web response as a JSON object. It expects the JSON object to contain properties
+The plugin attempts to deserialize the web response as a JSON object. It expects the JSON object to contain properties
 that represent each of the controller button states (as integers). If any buttons are not included in the response, 
 their values will default to 0.
 
