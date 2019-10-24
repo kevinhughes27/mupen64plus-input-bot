@@ -47,7 +47,7 @@ Usage
 mupen64plus --input /usr/local/lib/mupen64plus/mupen64plus-input-bot.so MarioKart64.z64
 ```
 
-By default, the driver specifies the HTTP server as `localhost:8082` with a single controller connected. This can be overridden per controller via configuration. 
+By default, the driver specifies the HTTP server as `localhost:8082` with a single controller connected. This can be overridden per controller via configuration.
 
 Configuration
 -------------
