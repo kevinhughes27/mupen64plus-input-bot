@@ -10,15 +10,13 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <netdb.h>
+#include <arpa/inet.h>
 
 #include "plugin.h"
 #include "controller.h"
 
 #include "json.h"
 #include "json_tokener.h"
-
-#define HOST "localhost"
-#define PORT 8082
 
 int socket_connect(char *host, int portno) {
     struct hostent *server;
@@ -31,7 +29,7 @@ int socket_connect(char *host, int portno) {
 
     /* lookup the ip address */
     server = gethostbyname(host);
-    if (server == NULL) DebugMessage(M64MSG_ERROR, "ERROR, no such host");
+    if (server == NULL) DebugMessage(M64MSG_ERROR, "ERROR, no such host '%s'", host);
 
     /* fill in the structure */
     memset(&serv_addr, 0, sizeof(serv_addr));
@@ -41,7 +39,7 @@ int socket_connect(char *host, int portno) {
 
     /* connect the socket */
     if (connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
-        DebugMessage(M64MSG_INFO, "ERROR connecting, please start bot server.");
+        DebugMessage(M64MSG_INFO, "ERROR connecting to %s (%s) on port %d, please start bot server.", host, inet_ntoa(serv_addr.sin_addr), portno);
         return -1;
     }
 
@@ -68,7 +66,7 @@ void clear_controller(int Control) {
 }
 
 void read_controller(int Control) {
-    int sockfd = socket_connect(HOST, PORT);
+    int sockfd = socket_connect(controller[Control].host, controller[Control].port);
 
     if (sockfd == -1) {
         clear_controller(Control);
