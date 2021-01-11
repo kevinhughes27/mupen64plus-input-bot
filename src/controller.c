@@ -156,5 +156,8 @@ void read_controller(int Control) {
     controller[Control].buttons.Y_AXIS = 
         json_object_get_int(json_object_object_get(jsonObj, "Y_AXIS"));
 
+    // Mark the JSON object to be freed:
+    json_object_put(jsonObj);
+    
     close(sockfd);
 }
