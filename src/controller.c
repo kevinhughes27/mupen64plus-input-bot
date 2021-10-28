@@ -111,9 +111,8 @@ void read_controller(int Control) {
 #endif
 
     /* parse the http response */
-    char *body = strtok(response, "\n");
-    for (int i = 0; i < 5; i++)
-        body = strtok(NULL, "\n");
+    char *body = strstr(response, "\r\n\r\n");
+    body = body + 4;
 
     /* parse the body of the response */
     json_object *jsonObj = json_tokener_parse(body);
